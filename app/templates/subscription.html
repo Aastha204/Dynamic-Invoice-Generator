@@ -1,0 +1,29 @@
+{% extends 'subscribe_base.html' %}
+
+{% block title %} Subscribe {% endblock %}
+
+{% block body %}
+    <section class="price" id="prices">
+        <div class="pricing-section">
+            <h1>Choose your invoice plan</h1>
+            <p>We're on a mission to support you, the small business owner simplifying your invoicing process, so you
+                can get paid faster.</p>
+            <div class="toggle">
+                <div class="save-yearly">
+                    Save 20% <i class='bx bx-down-arrow'></i>
+                </div>
+                <div class="buttons">
+                    <button class="toggle-button" id="yearly">Yearly</button>
+                    <button class="toggle-button active" id="monthly">Monthly</button>
+                </div>
+            </div>
+            <div class="pricing-plans" id="pricing-plans">
+                <!-- Plans will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+    <a href="{{ url_for('routes.home') }}" class="home-button">
+        <i class='bx bx-home'></i>
+    </a>
+    {% endblock %}
+    

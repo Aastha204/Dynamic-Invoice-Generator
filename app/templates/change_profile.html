@@ -1,0 +1,45 @@
+{% extends 'changeprofilebase.html' %}
+
+{% block title %} Change Profile {% endblock %}
+
+{% block body %}
+    <div class="form-container">
+        <h1>Change Your Profile Details</h1>
+
+        <form method="POST" action="{{ url_for('routes.changeuserdetail', user_id=user_id) }}">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                <label for="name" class="form-label">{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+
+            <div class="mb-3">
+                <label for="city" class="form-label">{{ form.city.label }}</label>
+                {{ form.city }}
+            </div>
+
+            <div class="mb-3">
+                <label for="country" class="form-label">{{ form.country.label }}</label>
+                {{ form.country }}
+            </div>
+
+            <div class="mb-3">
+                <label for="occupation" class="form-label">{{ form.occupation.label }} </label>
+                {{ form.occupation }}
+            </div>
+
+            <div class="mb-3">
+                <label for="occupation_city" class="form-label">{{ form.occupation_city.label }} </label>
+                {{ form.occupation_city }}
+            </div>
+
+            <div class="mb-3">
+                <label for="occupation_country" class="form-label">{{ form.occupation_country.label }} </label>
+                {{ form.occupation_country }}
+            </div>
+
+            {{ form.save_field }}
+        </form>
+    </div>
+    {% endblock %}

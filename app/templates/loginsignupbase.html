@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/e24507d923.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" />
+
+    <title>invoice-co | {% block title %} {% endblock %}</title>
+
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(170deg, #530449, #061f4e);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+        .base {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .base-content {
+            background: linear-gradient(135deg, #4a4a80 0%, #181881 60%, #4a0458 100%);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            max-width: 450px; /* Increased width */
+            width: 100%;
+        }
+        .form h3 {
+            margin-bottom: 15px;
+            font-size: 35px; /* Increased font size */
+            color: #f4f4f4;
+        }
+        .form hr {
+            border: none;
+            border-top: 1px solid #666;
+            margin: 10px 0;
+        }
+        .first {
+            color: #fff;
+        }
+        .form .email, .form .password {
+            /* margin-bottom: 25px; Increased margin */
+            font-size: 25px;
+        }
+        .form h4 {
+            /* margin-bottom: 15px; Increased margin */
+            font-size: 23px; /* Increased font size */
+            color: #ddd;
+            margin:2px;
+            margin-bottom: 8px;
+        }
+        .form input[type="text"], .form input[type="password"], .form input[type="email"] {
+            width: 80%;
+            padding: 5px; /* Increased padding */
+            border: 1px solid #1fc3ec;
+            border-radius: 5px;
+             margin-bottom: 5px;
+            font-size: 18px; /* Increased font size */
+        }
+        
+        
+        .form .buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .form .buttons a {
+            text-decoration: none;
+            color: #66b2ff;
+            font-size: 18px; /* Increased font size */
+            padding: 10px 15px;
+            border: 2px solid #66b2ff; /* Added border */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transition */
+        }
+        .form .buttons a:hover {
+            text-decoration: underline;
+            background-color: #2485e6; /* Background color on hover */
+            color: #fff; /* Text color on hover */
+            border-color: #66b2ff; /* Border color on hover */
+        }
+        
+        .login{
+            text-decoration: none;
+            color: #66b2ff;
+            font-size: 18px; /* Increased font size */
+            padding: 10px 15px;
+            background-color: transparent;
+            border: 2px solid #66b2ff; /* Added border */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .login:hover{
+            text-decoration: underline;
+            background-color: #2485e6; /* Background color on hover */
+            color: #fff; /* Text color on hover */
+            border-color: #66b2ff;
+            
+        }
+        .alert-success {
+            /* background-color: #e1e9f0; */
+            color: #f4f5f7;
+            font-size: 25px;
+        }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .form h3 {
+                font-size: 28px;
+            }
+            .form h4 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form h3 {
+                font-size: 24px;
+            }
+            .form h4 {
+                font-size: 18px;
+            }
+            .form input[type="text"], 
+            .form input[type="password"], 
+            .form input[type="email"] {
+                font-size: 16px;
+            }
+            .form .buttons {
+                flex-direction: column;
+                align-items: stretch; /* Stretch buttons to full width */
+            }
+            .form .login {
+                width: 100px;
+                margin-bottom: 10px;
+            }
+            .form .buttons a{
+                width:85px;
+                margin-bottom:10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 5px;">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
+    {% block body %}
+    {% endblock %}
+</body>
+</html>

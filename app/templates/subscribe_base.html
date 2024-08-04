@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons/css/boxicons.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .price {
+            background: linear-gradient(170deg, #530449, #061f4e);
+            padding: 20px;
+        }
+
+        .pricing-section {
+            text-align: center;
+            color: white;
+        }
+
+        .pricing-section h1 {
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .pricing-section p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: rgb(192, 188, 188);
+        }
+
+        .toggle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .save-yearly {
+            color: #ffcc00;
+            margin-bottom: 5px;
+            font-size: 19px;
+            display: flex;
+            margin-right: 90px;
+            align-items: center;
+        }
+
+        .save-yearly i {
+            margin-left: 5px;
+        }
+
+        .buttons {
+            display: flex;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .toggle .toggle-button {
+            background-color: rgba(232, 232, 235, 0.199);
+            color: #fff;
+            border: none;
+            font-size: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex: 1;
+        }
+
+        .toggle .active {
+            background-color: #00bfa6;
+        }
+
+        .pricing-plans {
+            display: flex;
+            justify-content: center;
+            gap: 70px;
+            /* Adjusted gap for responsive layout */
+            flex-wrap: wrap;
+            padding: 0 17px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .plan {
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .plan .content {
+            background: linear-gradient(135deg, #4a4a80 0%, #181881 60%, #4a0458 100%);
+            border-radius: 0 75px 15px 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            margin: auto;
+        }
+
+        .plan:hover .content {
+            transform: scale(1.05);
+        }
+
+        .plan h2 {
+            background-color: #843cbe4d;
+            padding: 10px;
+            border-radius: 15px 15px 0 0;
+            text-align: left;
+            font-size: 1.5em;
+            width: 140px;
+            margin: 0;
+        }
+
+        .plan.professional h2 {
+            background-color: #c4b704;
+        }
+
+        .plan.enterprise h2 {
+            background-color: #d63384;
+        }
+
+        .plan .price1 {
+            font-size: 2.5em;
+            background-color: #061f4e44;
+            margin: 0;
+            margin-bottom: 25px;
+            color: white;
+            text-align: center;
+        }
+
+        .plan p {
+            margin: 10px 0;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .plan ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .plan ul li {
+            margin: 10px 0;
+            padding-left: 20px;
+            padding-bottom: 5px;
+            position: relative;
+        }
+
+        .plan ul li::before {
+            content: '✔';
+            color: #6afce8;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .plan .get-started {
+            background-color: #00bfa6;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .plan .get-started:hover {
+            background-color: #007e6a;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-section h1 {
+                font-size: 2em;
+            }
+
+            .pricing-section p {
+                font-size: 1em;
+            }
+
+            .toggle .toggle-button {
+                font-size: 18px;
+                padding: 8px 16px;
+            }
+
+            .pricing-plans {
+                gap: 10px;
+            }
+
+            .plan {
+                width: 100%;
+                max-width: 320px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pricing-section h1 {
+                font-size: 1.5em;
+            }
+
+            .pricing-section p {
+                font-size: 0.9em;
+            }
+
+            .toggle .toggle-button {
+                font-size: 16px;
+                padding: 6px 12px;
+            }
+
+            .pricing-plans {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0;
+            }
+
+            .plan {
+                width: 100%;
+                max-width: none;
+                padding: 10px;
+            }
+        }
+        .home-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #3051e0; /* Adjust color to fit your theme */
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px; /* Adjust icon size */
+    transition: background-color 0.3s;
+}
+
+.home-button:hover {
+    background-color: #031141; 
+    /* Darker shade on hover */
+    color:white;
+    box-shadow:0 0 15px aqua;
+}
+
+.home-button i {
+    margin: 0;
+}
+
+
+        .alert {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            color: #040f3f;
+        }
+
+        .alert.success {
+            background-color: #28a745;
+            /* Green for success */
+            font-size: 15px;
+        }
+
+        .alert.error {
+            background-color: #dc3545;
+            /* Red for error */
+            font-size: 15px;
+        }
+    </style>
+
+    </style>
+</head>
+
+<body>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 5px;">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
+    {% block body %}
+    {% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const monthlyPlans = [
+                {
+                    name: 'Basic',
+                    price1: '$9.99',
+                    features: ['100 Monthly invoice', '25 Save clients', 'Up to 2 team members', 'Estimated (Quotes)']
+                },
+                {
+                    name: 'Professional',
+                    price1: '$19.99',
+                    features: ['250 Monthly invoice', '100 Save clients', 'Up to 10 team members', 'Invoice reminder', 'Recurring statements']
+                },
+                {
+                    name: 'Enterprise',
+                    price1: '$29.99',
+                    features: ['Unlimited monthly invoice', 'Unlimited save clients', 'Up to 25 team members', 'Invoice reminder', 'Recurring statements']
+                }
+            ];
+
+            const yearlyPlans = [
+                {
+                    name: 'Basic',
+                    price1: '$99.99',
+                    features: ['100 Monthly invoice', '25 Save clients', 'Up to 2 team members', 'Estimated (Quotes)']
+                },
+                {
+                    name: 'Professional',
+                    price1: '$199.99',
+                    features: ['250 Monthly invoice', '100 Save clients', 'Up to 10 team members', 'Invoice reminder', 'Recurring statements']
+                },
+                {
+                    name: 'Enterprise',
+                    price1: '$299.99',
+                    features: ['Unlimited monthly invoice', 'Unlimited save clients', 'Up to 25 team members', 'Invoice reminder', 'Recurring statements']
+                }
+            ];
+
+            const pricingPlansContainer = document.getElementById('pricing-plans');
+
+            function renderPlans(plans) {
+                pricingPlansContainer.innerHTML = '';
+                plans.forEach((plan, index) => {
+                    const planDiv = document.createElement('div');
+                    planDiv.classList.add('plan', plan.name.toLowerCase());
+
+                    planDiv.innerHTML = `
+                       <h2>${plan.name}</h2>
+                       <div class="content">
+                           <p class="price1">${plan.price1}</p>
+                           <p>Free account with limited features.</p>
+                           <ul>
+                               ${plan.features.map(feature => `<li>${feature}</li>`).join('')}
+                           </ul>
+                           <form method="POST" action="/subscribe/${plan.price1.toLowerCase()}/${plan.name.toLowerCase()}">
+                               <button type="submit" class="get-started">Get started</button>
+                           </form>
+                       </div>
+                   `;
+                    pricingPlansContainer.appendChild(planDiv);
+                });
+            }
+
+            document.getElementById('yearly').addEventListener('click', function () {
+                document.querySelector('.toggle .active').classList.remove('active');
+                this.classList.add('active');
+                renderPlans(yearlyPlans);
+            });
+
+            document.getElementById('monthly').addEventListener('click', function () {
+                document.querySelector('.toggle .active').classList.remove('active');
+                this.classList.add('active');
+                renderPlans(monthlyPlans);
+            });
+
+            // Initial render
+            renderPlans(monthlyPlans);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var alert = document.getElementById('alert');
+            if (alert) {
+                alert.style.display = 'block';
+                setTimeout(function () {
+                    alert.style.display = 'none';
+                }, 5000); // Hide after 5 seconds
+            }
+        });
+    </script>
+
+</body>
+
+</html>

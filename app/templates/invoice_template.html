@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(110deg, #021333, #56016b);
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+        .image-wrapper {
+            margin: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center align content inside image-wrapper */
+        }
+        .image-wrapper img {
+            width: 600px;
+            height: 800px;
+            /* object-fit: cover; */
+            object-fit: fill;
+        }
+        .button-container {
+            margin-top: 20px;
+            /* margin-bottom:30px; */
+        }
+        .like-use-button {
+            padding: 10px 20px;
+            background-color: #ba2bdd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 26px;
+            transition: background-color 0.3s ease;
+        }
+        .like-use-button:hover {
+            background-color: #021333;
+            box-shadow:0 0 15px aqua;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="button-container">
+        <button class="like-use-button" id="/usetemplate">Like it, Use it</button>
+    </div> -->
+    <div class="button-container">
+        <a href="{{ url_for('routes.use_template', template_id=template_id) }}" class="like-use-button">Use it</a>
+    </div>
+    <div class="image-wrapper">
+        <img src="{{ url_for('static', filename=image_filename) }}" alt="Invoice Template {{ template_id }}">
+    </div>
+    
+</body>
+</html>

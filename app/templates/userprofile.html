@@ -1,0 +1,77 @@
+{% extends 'profilbase.html' %}
+
+{% block title %} User Profile {% endblock %}
+
+{% block body %}
+  <header>
+  </header>
+  <div class="profile-page">
+    <div class="content">
+      <div class="content__cover">
+        <!-- <div class="content__avatar"></div> -->
+        <div class="content__bull"><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="content__actions"><a href="/">
+          <svg width="54" height="54" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 3l10 9h-3v9H5v-9H2l10-9zm0-2L1 10v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V10l-11-9z" />
+          </svg>
+
+          <span style="font-size: 30px;">Home</span></a><a href="#">
+          <svg width="4" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <!-- <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 5h14c.55 0 1 .45 1 1v14c0 .55-.45 1-1 1H5c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1zm6 10H6v-2h5v2zm6 0h-5v-2h5v2z"/> -->
+          </svg>
+
+          <span></span></a></div>
+      <div class="content__title">
+        <h1>{{user.name}}</h1><span>{{user.city}}, {{user.country}}</span>
+      </div>
+      <div class="content__description">
+        <p>{{user.occupation}}</p>
+        <p>{{user.city}} - {{user.country}}</p>
+      </div>
+      <ul class="content__list">
+        <li><span>Username</span>{{user.username}}</li>
+        <li><span>Email</span>{{user.email}}</li>
+        <li><span>Subscription Plan</span>{{ subscription_plan }}</li>
+      </ul>
+
+      
+      <!-- <div class="content__button"><a class="button" href="#">
+              <div class="button__border"></div>
+              <div class="button__bg"></div>
+              <p class="button__text">Change Password</p></a></div>
+
+              <div class="content__button"><a class="button" href="#">
+                <div class="button__border"></div>
+                <div class="button__bg"></div>
+                <p class="button__text">change Subscription Plan</p></a></div> -->
+
+      <div class="profile-page__button-container">
+        <a href="/change-password/{{ user.id }}" class="button" >Change Password</a>
+        <a href="/subscription" class="button">Change Subscription Plan</a>
+        <a href="/edit-profile/{{ user.id }}" class="button" >Edit Profile</a>
+      </div>
+
+    </div>
+    <div class="bg">
+      <div><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="theme-switcher-wrapper" id="theme-switcher-wrapper"><span>Themes color</span>
+      <ul>
+        <li><em class="is-active" data-theme="orange"></em></li>
+        <li><em data-theme="green"></em></li>
+        <li><em data-theme="purple"></em></li>
+        <li><em data-theme="blue"></em></li>
+      </ul>
+    </div>
+    <div class="theme-switcher-button" id="theme-switcher-button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <path fill="currentColor"
+          d="M352 0H32C14.33 0 0 14.33 0 32v224h384V32c0-17.67-14.33-32-32-32zM0 320c0 35.35 28.66 64 64 64h64v64c0 35.35 28.66 64 64 64s64-28.65 64-64v-64h64c35.34 0 64-28.65 64-64v-32H0v32zm192 104c13.25 0 24 10.74 24 24 0 13.25-10.75 24-24 24s-24-10.75-24-24c0-13.26 10.75-24 24-24z">
+        </path>
+      </svg>
+    </div>
+  </div>
+  {% endblock %}

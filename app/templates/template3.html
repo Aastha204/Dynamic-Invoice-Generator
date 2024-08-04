@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hourly Invoice</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .invoice-box {
+            width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+        .header {
+            background-color: #d3f5ff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .company-logo img {
+            width: 200px;
+            height: auto;
+        }
+        .header .company-details {
+            text-align: right;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .header .company-details input {
+            margin-bottom: 5px;
+            width: 190px;
+            text-align: right;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            padding: 5px;
+            font-family: inherit;
+        }
+        .invoice-title {
+            text-align: center;
+            font-size: 28px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .title-underline {
+            width: 80%;
+            height: 4px;
+            background-color: #1ae9c7e5; 
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #dddddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f9f9f9;
+        }
+        .invoice-details th {
+            color: #333;
+        }
+        .billed-to th[colspan="2"] {
+            background-color: #7cf3df3b; 
+            color: black; 
+            font-size: 25px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .work-details th {
+            background-color: #7cf3df3b;
+            color: black;
+        }
+        .total-amount {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            text-align: right;
+        }
+        .total-amount table {
+            width: 100%;
+        }
+        .total-amount th, .total-amount td {
+            border: none;
+            padding: 8px;
+        }
+        .total-amount tr td b {
+            font-size: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #d3f5ff;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .form-control {
+            border: none;
+            border-bottom: 1px solid #ddd;
+            padding: 4px;
+            width: 100%;
+            box-sizing: border-box;
+            background: transparent;
+        }
+        .form-control::placeholder {
+            color: #999;
+        }
+        .done-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #1ae9c7e5;
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .done-button:hover {
+            background-color: #17d7b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <form method="POST" oninput="calculateTotals()" action="{{ url_for('routes.invoice') }}">
+            {{ form.hidden_tag() }}
+            <div class="header">
+                <div class="company-logo">
+                    <img src="../static/images/logo.png" alt="Company Logo">
+                </div>
+                <div class="company-details">
+                    {{ form.house_no(class_='form-control', placeholder='House No') }}
+                    {{ form.city(class_='form-control', placeholder='City') }}
+                    {{ form.country(class_='form-control', placeholder='Country') }}
+                    {{ form.email(class_='form-control', placeholder='Email') }}
+                    {{ form.phone_no(class_='form-control', placeholder='Phone no') }}
+                </div>
+            </div>
+            <div class="invoice-title">Hourly Invoice
+                <div class="title-underline"></div>
+            </div>
+            <table class="invoice-details">
+                <tr>
+                    <th>Date:</th>
+                    <td>{{ form.due_date(class_='form-control', placeholder='DD/MM/YYYY') }}</td>
+                </tr>
+            </table>
+            <table class="billed-to">
+                <tr>
+                    <th colspan="2">Billed to</th>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{ form.receiver_name(class_='form-control', placeholder='Name') }}</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>{{ form.receiver_email(class_='form-control', placeholder='Email') }}</td>
+                </tr>
+                <tr>
+                    <th>Phone Number:</th>
+                    <td>{{ form.receiver_phone(class_='form-control', placeholder='Phone no') }}</td>
+                </tr>
+                <tr>
+                    <th>Address:</th>
+                    <td>
+                        {{ form.address_line1(class_='form-control', placeholder='Address Line 1') }}
+                        {{ form.address_line2(class_='form-control', placeholder='Address Line 2') }}
+                    </td>
+                </tr>
+            </table>
+            <table class="work-details">
+                <tr>
+                    <th>Hours Worked</th>
+                    <th>Description</th>
+                    <th>Rate per hour</th>
+                    <th>Amount</th>
+                </tr>
+                <tr>
+                    <td><input type="number" id="hours_worked1" name="hours_worked1" class="form-control" placeholder="0.0" oninput="calculateRowAmount(1)"></td>
+                    <td>
+                        {{ form.description1(class_='form-control', placeholder='Work A') }}
+                    </td>
+                    
+                    <td><input type="number" id="rate_per_hour1" name="rate_per_hour1" class="form-control" placeholder="0.0" oninput="calculateRowAmount(1)"></td>
+                    <td><input type="number" id="amount1" name="amount1" class="form-control" placeholder="0.0" step="0.01" readonly></td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="hours_worked2" name="hours_worked2" class="form-control" placeholder="0.0" oninput="calculateRowAmount(2)"></td>
+                    <td>{{ form.description2(class_='form-control', placeholder='Work B') }}</td>
+                    <td><input type="number" id="rate_per_hour2" name="rate_per_hour2" class="form-control" placeholder="0.0" oninput="calculateRowAmount(2)"></td>
+                    <td><input type="number" id="amount2" name="amount2" class="form-control" placeholder="0.0" step="0.01" readonly></td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="hours_worked3" name="hours_worked3" class="form-control" placeholder="0.0" oninput="calculateRowAmount(3)"></td>
+                    <td>{{ form.description3(class_='form-control', placeholder='Work C') }}</td>
+                    <td><input type="number" id="rate_per_hour3" name="rate_per_hour3" class="form-control" placeholder="0.0" oninput="calculateRowAmount(3)"></td>
+                    <td><input type="number" id="amount3" name="amount3" class="form-control" placeholder="0.0" step="0.01" readonly></td>
+                </tr>
+            </table>
+            <div class="total-amount">
+                <table>
+                    <tr>
+                        <th>Total Amount(Rs):</th>
+                        <td><input type="text" id="total_amount" class="form-control" placeholder="0.00" readonly></td>
+                    </tr>
+                    <tr>
+                        <th>GST(3%):</th>
+                        <td><input type="text" id="gst" class="form-control" placeholder="0.3" readonly></td>
+                    </tr>
+                    <tr>
+                        <th>Grand Total(Rs):</th>
+                        <td><input type="text" id="grand_total" class="form-control" placeholder="0.00" readonly></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="footer">
+                &copy; 2024 invoice.co. All rights reserved.
+            </div>
+            {{ form.done(class_='done-button') }}
+        </form>
+    </div>
+    <script>
+        function calculateRowAmount(row) {
+            let hoursWorked = parseFloat(document.getElementById('hours_worked' + row).value) || 0;
+            let ratePerHour = parseFloat(document.getElementById('rate_per_hour' + row).value) || 0;
+            let amount = hoursWorked * ratePerHour;
+            document.getElementById('amount' + row).value = amount.toFixed(2);
+
+            calculateTotals();
+        }
+
+        function calculateTotals() {
+            // Get amount values
+            let amount1 = parseFloat(document.getElementById('amount1').value) || 0;
+            let amount2 = parseFloat(document.getElementById('amount2').value) || 0;
+            let amount3 = parseFloat(document.getElementById('amount3').value) || 0;
+
+            // Calculate totals
+            let totalAmount = amount1 + amount2 + amount3;
+            let gst = totalAmount * 0.03; // 3% GST
+            let grandTotal = totalAmount + gst;
+
+            // Update fields
+            document.getElementById('total_amount').value = `${totalAmount.toFixed(2)}`;
+            document.getElementById('gst').value = `${gst.toFixed(2)}`;
+            document.getElementById('grand_total').value = `${grandTotal.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+{% extends 'index_base.html' %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+    <header>
+        <div class="nav container">
+            <a href="#" class="logo">invoice<span>.co</span></a>
+            <nav data-navbar>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#features" class="dropbtn">Feature<i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-content">
+                            {% if current_user.is_authenticated %}
+                            <li><a href="/template">Create Invoice</a></li>
+                            <li><a href="/draft_invoice">Manage Invoices</a></li>
+                            <li><a href="#clients">Clients</a></li>
+                            <li><a href="#services">Products/Services</a></li>
+                            <li><a href="/template">Templates</a></li>
+                            {% else %}
+                            <li><a href="#clients">Clients</a></li>
+                            <li><a href="#services">Products/Services</a></li>
+                            <li><a href="/template">Templates</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    
+                    <li><a href="#prices">Pricing</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="/draft_invoice">Invoice Generator</a></li>
+                    {% else %}
+                    <li><a href="/login">Invoice Generator</a></li>
+                    {% endif %}
+                    <li><a href="#help">Help</a></li>
+                </ul>
+            </nav>
+            {% if current_user.is_authenticated %}
+            <a href="/profile/{{current_user.id}}" class="login" style="padding:2px;font-size: 30px;"><i class='bx bx-user'></i></a>
+            <a href="/logout" class="login">Log out</a>
+            {% else %}
+            <a href="/login" class="login">Log in</a>
+            {% endif %}
+
+            <button data-nav-toggle-btn class="nav-toggle-btn">
+                <i class='bx bx-menu'></i>
+            </button>
+            <div data-overlay class="overlay"></div>
+        </div>
+    </header>
+    
+    <section class="home" id="home">
+        <div class="home-text container">
+            <div class="left-section">
+                <a href="#" class="invoicepayment">Invoice Payments</a>
+                <h2>Collect and Reconcile<br><span> Invoice Payments</span><br> Automatically</h2>
+                <p>Invoicing is the fastest way for your business to bill customers with subscriptions or invoices. Capture more Revenue.</p>
+                <div class="cta-buttons">
+                    <a href="/login" class="getstarted">Get Started</a>
+                    <a href="mailto:sales@yourcompany.com" class="talktosales">Talk to Sales <i class='bx bx-right-arrow-alt'></i></a>
+                </div>
+            </div>
+            <div class="right-section">
+                <img src="../static/images/img1.png" alt="Invoice Image">
+            </div>
+        </div>
+    </section>
+
+    <section class="sponsor" id="sponsors">
+        <h1>Tie-Up Companies</h1>
+        <div class="sponsor-images">
+            <a href="https://www.linkedin.com" target="_blank" class="sponsor-link">
+                <img src="../static/images/Linkedin.png" alt="LinkedIn">
+            </a>
+            <a href="https://www.microsoft.com" target="_blank" class="sponsor-link">
+                <img src="../static/images/Microsoft.png" alt="Microsoft">
+            </a>
+            <a href="https://www.symantec.com" target="_blank" class="sponsor-link">
+                <img src="../static/images/symntec.png" alt="Symantec">
+            </a>
+            <a href="https://www.hubspot.com" target="_blank" class="sponsor-link">
+                <img src="../static/images/hubspot.png" alt="HubSpot">
+            </a>
+            <a href="https://www.amazon.com" target="_blank" class="sponsor-link">
+                <img src="../static/images/amazon.png" alt="Amazon">
+            </a>
+        </div>
+           
+                <div class="entr">
+                    <h2>40,000+ entrepreneurs uses our invoice generator</h2>
+                    <a href="/login" class="joinnow">Join now</a>
+                </div>
+    </section>
+
+    <section class="quesans">
+        <div class="container">
+            <div class="image-section">
+                <img src="../static/images/qa.png" alt="Image Description">
+            </div>
+            <div class="content-section">
+                <h2>How it works</h2>
+                <div class="faq-section">
+                    <div class="faq-item">
+                        <div class="faq-question-container" onclick="toggleAnswer(this)">
+                            <div class="faq-line"></div>
+                            <div class="faq-question">
+                                <span>One-time customer setup</span>
+                                <i class="bx bx-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Your customer enters their payment details securely online. Authorise you to collect payment by Direct Debit. You can add the customisable payment page directly to your website or send them a secure link.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question-container" onclick="toggleAnswer(this)">
+                            <div class="faq-line"></div>
+                            <div class="faq-question">
+                                <span>Schedule Payments</span>
+                                <i class="bx bx-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Set up a flexible payment schedule that works for your customers and your business. Choose the frequency and dates for payments to be automatically debited from your customers' accounts. Ensure timely payments without any hassle</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question-container" onclick="toggleAnswer(this)">
+                            <div class="faq-line"></div>
+                            <div class="faq-question">
+                                <span>Get paid automatically</span>
+                                <i class="bx bx-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Once your customer authorizes, payments are collected automatically on the scheduled dates. No need for manual intervention, ensuring you get paid on time every time, improving cash flow and reducing administrative work.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question-container" onclick="toggleAnswer(this)">
+                            <div class="faq-line"></div>
+                            <div class="faq-question">
+                                <span>Keep track</span>
+                                <i class="bx bx-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Easily monitor all transactions through your dashboard. View payment statuses, upcoming payments, and any failed transactions. Get real-time insights and detailed reports to keep track of your finances effortlessly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="services-section" id="services">
+        <h2>Support your type of business</h2>
+        <p>Oppovoice integration with over 100 great apps to streamline your business, help you connect with your team and clients, and better understand your business.</p>
+        <div class="services-container">
+            <div class="services aqua-border">
+                <div class="services-icon" style="background-color: rgb(18, 231, 231);">
+                    <i class="bx bx-user"></i>
+                </div>
+                <h3>Freelancers</h3>
+                <p>Accounting Software for Freelancers</p>
+            </div>
+            <div class="services pink-border">
+                <div class="services-icon" style="background-color: rgb(247, 13, 102);">
+                    <i class="bx bx-briefcase"></i>
+                </div>
+                <h3>Self-Employed</h3>
+                <p>Accounting Software for Self-Employed</p>
+            </div>
+            <div class="services yellow-border">
+                <div class="services-icon" style="background-color: rgb(236, 176, 24);">
+                    <i class="bx bx-building"></i>
+                </div>
+                <h3>Employed</h3>
+                <p>Accounting Software for Businesses</p>
+            </div>
+            <div class="services purple-border">
+                <div class="services-icon" style="background-color: rgb(194, 10, 194);">
+                    <i class="bx bx-hard-hat"></i>
+                </div>
+                <h3>Contractors</h3>
+                <p>Accounting Software for Businesses</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="features-content">
+            <h2>Turn quotes into the invoice with minimal effort</h2>
+            <p>Create customizable, professional invoices in seconds, and allow your customers to pay instantly. Remind customers or chase late payment with inbuilt automation.
+                Reduce the time between sending an invoice and receiving payment using online Invoicing. It can make a huge difference.</p>
+            <div class="bullet-points">
+                <div class="bullet-item">
+                    <span class="bullet-icon">&#x2713;</span>
+                    <p>Based on the quotes you have</p>
+                </div>
+                <div class="bullet-item">
+                    <span class="bullet-icon">&#x2713;</span>
+                    <p>Automatically send by email as a PDF</p>
+                </div>
+                <div class="bullet-item">
+                    <span class="bullet-icon">&#x2713;</span>
+                    <p>Send professional invoices directly</p>
+                </div>
+                <div class="bullet-item">
+                    <span class="bullet-icon">&#x2713;</span>
+                    <p>Get ready automatically for Tax Filing</p>
+                </div>
+            </div>
+        </div>
+        <img src="../static/images/feature.png" alt="Image Description" class="features-img">
+    </section>
+    
+    <section class="price" id="prices">
+        <div class="pricing-section">
+            <h1>Choose your invoice plan</h1>
+            <p>We're on a mission to support you, the small business owner simplifying your invoicing process, so you can get paid faster.</p>
+            <div class="toggle">
+                <div class="save-yearly">
+                    Save 20% <i class='bx bx-down-arrow'></i>
+                </div>
+                <div class="buttons">
+                    <button class="toggle-button" id="yearly">Yearly</button>
+                    <button class="toggle-button active" id="monthly">Monthly</button>
+                </div>
+            </div>
+            <div class="pricing-plans" id="pricing-plans">
+                <!-- Plans will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section class="clients" id="clients">
+        <h1>Clients Speaks</h1>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="slider-item swiper-slide">
+                    <div class="slider-image-wrapper">
+                        <img class="slider-image" src="../static/images/testi5.png" alt="SliderImg">
+                    </div>
+                    <div class="slider-item-content">
+                        <p class="review">Excellent tool for generating invoices quickly!</p>
+                        <div class="person-info">
+                            <h1>Kevin Andrew</h1>
+                            <p>Freelancer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item swiper-slide">
+                    <div class="slider-image-wrapper">
+                        <img class="slider-image" src="../static/images/testi2.jpg" alt="SliderImg">
+                    </div>
+                    <div class="slider-item-content">
+                        <p class="review">Great interface and easy to use. Helped me streamline my billing process.</p>
+                        <div class="person-info">
+                            <h1>James Parker</h1>
+                            <p>Entrepreneur</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-item swiper-slide">
+                    <div class="slider-image-wrapper">
+                        <img class="slider-image" src="../static/images/testi3.jpg" alt="SliderImg">
+                    </div>
+                    <div class="slider-item-content">
+                        <p class="review">This invoice generator is a lifesaver for my business. Highly recommend!</p>
+                        <div class="person-info">
+                            <h1>Smith Forbes</h1>
+                            <p>Businessman</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="slider-buttons">
+            <button class="swiper-button-prev">Prev</button>
+            <button class="swiper-button-next">Next</button>
+        </div>
+
+        
+    </section>
+
+    <div class="freeaccount">
+        <div class="text-content">
+            <h2>Create a Free Account</h2>
+            <p>No obligation, Cancel anytime</p>
+        </div>
+        <a href="/login" class="getstarted">Get Started</a>
+    </div>
+    
+    <footer class="footer" id="help">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="invoice1">
+                <h3>Invoice.co</h3>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#home">About invoice</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#prices">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Helpful links</h3>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Terms of services</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <div class="contacticon">
+                <ul>
+                    <li><i class="fas fa-phone-alt"></i><a href="tel:7162362514"> 716-236-2514</a></li>
+                    <li><i class="fas fa-envelope"></i><a href="mailto:contactinvoiceco@gmail.com"> contactinvoiceco@gmail.com</a></li>
+                </ul>
+                </div>
+            </div>
+            <div class="footer-col">
+                <div class="news">
+                <h3>Subscribe to our newsletter</h3>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Invoice.co | All Rights Reserved.</p>
+            <div class="payment-methods">
+                <img src="../static/images/visa.png" alt="Visa">
+                <img src="../static/images/paypal.png" alt="PayPal">
+                <img src="../static/images/paytm.png" alt="Paytm">
+                <img src="../static/images/mastercard.png" alt="MasterCard">
+            </div>
+        </div>
+    </footer>
+    
+    
+
+    {% endblock %}
