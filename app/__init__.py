@@ -3,7 +3,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
-# from flask_mailman import EmailMessage
+
 
 
 db = SQLAlchemy()
@@ -21,20 +21,15 @@ def create_app():
     app.config['SECRET_KEY'] = 'hbnwdvbn ajnbsjn ahe'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 
-    # Mail configuration
-    # app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-    # app.config['MAIL_PORT'] = 587
-    # app.config['MAIL_USE_TLS'] = True
-    # app.config['MAIL_USERNAME'] = 'aasthagarg333@gmail.com'
-    # app.config['MAIL_PASSWORD'] = 'liuzbtqoytxjfjyo'
+    
 
 
     db.init_app(app)
-    # mail.init_app(app)
+    
 
-    # @app.errorhandler(404)
-    # def page_not_found(error):
-    #     return render_template('404.html')
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return render_template('404.html')
 
     login_manager = LoginManager()
     login_manager.init_app(app)
@@ -49,12 +44,12 @@ def create_app():
     from .admin import admin
     from .models import User, Invoice, Subscription,template_1,template_2_3
 
-    app.register_blueprint(routes, url_prefix='/') # localhost:5000/about-us
-    app.register_blueprint(admin, url_prefix='/') # localhost:5000/auth/change-password
+    app.register_blueprint(routes, url_prefix='/') 
+    app.register_blueprint(admin, url_prefix='/') 
     # app.register_blueprint(admin, url_prefix='/')
 
-    # with app.app_context():
-    #     create_database()
+    with app.app_context():
+        create_database()
 
     return app
 
