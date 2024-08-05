@@ -2,9 +2,13 @@ from flask import Blueprint, render_template, flash, redirect,request,url_for,se
 from .forms import LoginForm, SignUpForm, PasswordChangeForm,UserDetailChange,InvoicedetailForm
 from .models import User,Subscription,Invoice,template_1,template_2_3
 from . import db
+from . import mail
 from flask_login import login_user, login_required, logout_user,current_user
+from flask_mail import Message
 from datetime import datetime, timedelta
-
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 routes = Blueprint('routes', __name__)
 
@@ -248,9 +252,14 @@ def draft_html():
     invoices = Invoice.query.filter_by(user_id=current_user.id, status='draft').all()
     return render_template('draft_invoices.html', invoices=invoices)
 
+@routes.route('/done_payment', methods=['GET'])
+@login_required
+def done_payment():
+    invoices = Invoice.query.filter_by(user_id=current_user.id, status='paid').all()
+    return render_template('done_payment.html', invoices=invoices)
 
 
-@routes.route('/invoice/generate/<int:invoice_id>', methods=['POST'])
+@routes.route('/invoice/generate/<int:invoice_id>', methods=['GET','POST'])
 @login_required
 def generate_invoice(invoice_id):
     invoice = Invoice.query.get_or_404(invoice_id)
@@ -382,11 +391,45 @@ def invoice():
         db.session.add(new_template_2_3_entry)
         db.session.commit()
 
+        # Send email to the receiver
+        receiver_email = form.receiver_email.data
+        invoice_id = new_invoice.id
+        button_link = url_for('routes.send_invoice_copy', invoice_id=invoice_id, _external=True)
+
+
+        message = MIMEMultipart("alternative")
+        message["Subject"] = "New Invoice"
+        message["From"] = "aasthagarg333@gmail.com"
+        message["To"] = receiver_email
+
+        html_content = f"""
+        <html>
+        <body>
+            <p>Hello {form.receiver_name.data},</p>
+            <p>You have received a new invoice. Click the button below to view it:</p>
+            <a href="{button_link}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">View Invoice</a>
+            <p>Thank you!</p>
+        </body>
+        </html>
+        """
+
+        # Attach the HTML content to the email
+        part = MIMEText(html_content, "html")
+        message.attach(part)
+
+        # Send the email
+        try:
+            with smtplib.SMTP('smtp.gmail.com', 587) as s:
+                s.starttls()  # Start TLS for security
+                s.login("aasthagarg333@gmail.com", "xbohgmmsvuxgnzko")  # Authentication
+                s.sendmail("aasthagarg333@gmail.com", receiver_email, message.as_string())  # Send mail
+        except Exception as e:
+            flash(f'An error occurred: {str(e)}', 'danger')
+
         # Redirect to a success page or a page that displays the generated invoice
         return redirect(url_for('routes.draft_html'))  
-  # Make sure 'success_page' route is defined
 
-    return 'not success page' # Make sure the form is rendered in case of errors
+    return "not successful"
 
 @routes.route('/update-invoice/<int:invoice_id>', methods=['GET', 'POST'])
 @login_required
@@ -463,9 +506,91 @@ def update_invoice(invoice_id):
             template.amount3 = form.amount3.data
 
             db.session.commit()
-            return redirect(url_for('routes.draft_html'))  # Adjust this to the correct route name
 
+            receiver_email = form.receiver_email.data
+            invoice_id = invoice.id
+            button_link = url_for('routes.generate_invoice', invoice_id=invoice_id, _external=True)
+
+            message = MIMEMultipart("alternative")
+            message["Subject"] = "Invoice Updated"
+            message["From"] = "aasthagarg333@gmail.com"
+            message["To"] = receiver_email
+
+            html_content = f"""
+            <html>
+            <body>
+                <p>Hello {form.receiver_name.data},</p>
+                <p>Your invoice has been updated. Click the button below to view it:</p>
+                <a href="{button_link}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">View Invoice</a>
+                <p>Thank you!</p>
+            </body>
+            </html>
+            """
+
+            # Attach the HTML content to the email
+            part = MIMEText(html_content, "html")
+            message.attach(part)
+
+            # Send the email
+            try:
+                with smtplib.SMTP('smtp.gmail.com', 587) as s:
+                    s.starttls()  # Start TLS for security
+                    s.login("aasthagarg333@gmail.com", "xbohgmmsvuxgnzko")  # Authentication
+                    s.sendmail("aasthagarg333@gmail.com", receiver_email, message.as_string())  # Send mail
+            except Exception as e:
+                flash(f'An error occurred: {str(e)}', 'danger')
+
+            # Redirect to a success page or a page that displays the generated invoice
+            return redirect(url_for('routes.draft_html'))
         return render_template('template3_update.html',form=form, invoice_id=invoice_id)
-
     return 'no update'
+
+@routes.route('/send_invoice_copy/<int:invoice_id>')
+def send_invoice_copy(invoice_id):
+    try:
+        invoice = Invoice.query.get_or_404(invoice_id)
+        if invoice.status == 'paid':
+            return render_template('paid.html', message="Invoice is already marked as paid.")
+        
+        invoice.status = 'paid'
+        db.session.commit()
+
+        # Send new email with download button
+        download_link = url_for('routes.generate_invoice', invoice_id=invoice.id, _external=True)
+        
+        # Create the email content
+        message = MIMEMultipart("alternative")
+        message["Subject"] = "Invoice Paid - Download Your Invoice"
+        message["From"] = "aasthagarg333@gmail.com"
+        message["To"] = invoice.receiver_email
+
+        html_content = f"""
+        <html>
+        <body>
+            <p>Hello {invoice.receiver_name},</p>
+            <p>Your invoice has been marked as paid. Click the button below to download it:</p>
+            <a href="{download_link}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">Download Invoice</a>
+            <p>Thank you!</p>
+        </body>
+        </html>
+        """
+
+        # Attach the HTML content to the email
+        part = MIMEText(html_content, "html")
+        message.attach(part)
+
+        # Send the email
+        try:
+            with smtplib.SMTP('smtp.gmail.com', 587) as s:
+                s.starttls()  # Start TLS for security
+                s.login("aasthagarg333@gmail.com", "xbohgmmsvuxgnzko")  # Authentication
+                s.sendmail("aasthagarg333@gmail.com", invoice.receiver_email, message.as_string())  # Send mail
+        except Exception as e:
+            print(f'Error sending email: {str(e)}')
+
+        return render_template('paid.html', message="Invoice has been marked as paid and email has been sent.")
+    except Exception as e:
+        print(f'Error updating invoice status: {str(e)}')
+        return render_template('paid.html', message="An error occurred while updating the invoice status.")
+
 

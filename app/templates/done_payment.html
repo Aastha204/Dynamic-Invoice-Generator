@@ -71,7 +71,7 @@
 </head>
 <body>
     <a href="{{ url_for('routes.home') }}" class="home-button">Home</a>
-    <h1>{{ current_user.name }}'s Drafts</h1>
+    <h1>{{ current_user.name }}'s Payments</h1>
 
     <table>
         <thead>
@@ -95,9 +95,6 @@
                 <td>{{invoice.status}}</td>
                 <td>Rs {{ invoice.sub_total if invoice.sub_total else '0.00' }}</td>
                 <td>
-                    <form action="{{ url_for('routes.update_invoice', invoice_id=invoice.id) }}" method="post" style="display:inline;">
-                        <input type="submit" value="Update">
-                    </form>
                     <form action="{{ url_for('routes.generate_invoice', invoice_id=invoice.id) }}" method="post" style="display:inline;">
                         <input type="submit" value="Generate Invoice">
                     </form>

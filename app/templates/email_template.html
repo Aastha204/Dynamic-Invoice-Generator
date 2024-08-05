@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+</head>
+<body>
+    <p>Dear {{ receiver_name }},</p>
+    <p>You have received a new invoice. Click the button below to request a copy of the invoice.</p>
+    <a href="{{ url_for('routes.send_invoice_copy', invoice_id=invoice_id, _external=True) }}">
+        <button>Request Invoice Copy</button>
+    </a>
+    <p>Thank you!</p>
+</body>
+</html>
