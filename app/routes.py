@@ -356,6 +356,11 @@ def invoice():
         new_invoice = Invoice(
             user_id=current_user.id,
             template_id=template_id,
+            sender_houseno=form.house_no.data,
+            sender_city=form.city.data,
+            sender_country=form.country.data,
+            sender_email=form.email.data,
+            sender_phone=form.phone_no.data,
             receiver_name=form.receiver_name.data,
             receiver_email=form.receiver_email.data,
             receiver_phone=form.receiver_phone.data,
