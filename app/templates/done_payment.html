@@ -93,7 +93,7 @@
                 <td>{{ invoice.receiver_email }}</td>
                 <td>{{ invoice.due_date }}</td>
                 <td>{{invoice.status}}</td>
-                <td>Rs {{ invoice.sub_total if invoice.sub_total else '0.00' }}</td>
+                <td>₹{{ invoice.sub_total if invoice.sub_total else '0.00' }}</td>
                 <td>
                     <form action="{{ url_for('routes.generate_invoice', invoice_id=invoice.id) }}" method="post" style="display:inline;">
                         <input type="submit" value="Generate Invoice">

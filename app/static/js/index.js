@@ -81,118 +81,23 @@ function toggleAnswer(element) {
     }
 }
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     const monthlyPlans = [
-//         {
-//             name: 'Basic',
-//             price1: '$9.99',
-//             features: ['100 Monthly invoice', '25 Save clients', 'Up to 2 team members', 'Estimated (Quotes)']
-//         },
-//         {
-//             name: 'Professional',
-//             price1: '$19.99',
-//             features: ['250 Monthly invoice', '100 Save clients', 'Up to 10 team members', 'Invoice reminder', 'Recurring statements']
-//         },
-//         {
-//             name: 'Enterprise',
-//             price1: '$29.99',
-//             features: ['Unlimited monthly invoice', 'Unlimited save clients', 'Up to 25 team members', 'Invoice reminder', 'Recurring statements']
-//         }
-//     ];
 
-//     const yearlyPlans = [
-//         {
-//             name: 'Basic',
-//             price1: '$99.99',
-//             features: ['100 Monthly invoice', '25 Save clients', 'Up to 2 team members', 'Estimated (Quotes)']
-//         },
-//         {
-//             name: 'Professional',
-//             price1: '$199.99',
-//             features: ['250 Monthly invoice', '100 Save clients', 'Up to 10 team members', 'Invoice reminder', 'Recurring statements']
-//         },
-//         {
-//             name: 'Enterprise',
-//             price1: '$299.99',
-//             features: ['Unlimited monthly invoice', 'Unlimited save clients', 'Up to 25 team members', 'Invoice reminder', 'Recurring statements']
-//         }
-//     ];
-
-//     const pricingPlansContainer = document.getElementById('pricing-plans');
-
-//     function renderPlans(plans) {
-//         pricingPlansContainer.innerHTML = '';
-//         plans.forEach(plan => {
-//             const planDiv = document.createElement('div');
-//             planDiv.classList.add('plan', plan.name.toLowerCase());
-
-//             planDiv.innerHTML = `
-//                 <h2>${plan.name}</h2>
-//                 <div class="content">
-//                     <p class="price1">${plan.price1}</p>
-//                     <p>Free account with limited features.</p>
-//                     <ul>
-//                         ${plan.features.map(feature => `<li>${feature}</li>`).join('')}
-//                     </ul>
-//                     <button class="get-started">Get started</button>
-//                 </div>
-//             `;
-//             pricingPlansContainer.appendChild(planDiv);
-//         });
-//     }
-
-//     document.getElementById('yearly').addEventListener('click', function () {
-//         document.querySelector('.toggle .active').classList.remove('active');
-//         this.classList.add('active');
-//         renderPlans(yearlyPlans);
-//     });
-
-//     document.getElementById('monthly').addEventListener('click', function () {
-//         document.querySelector('.toggle .active').classList.remove('active');
-//         this.classList.add('active');
-//         renderPlans(monthlyPlans);
-//     });
-
-//     // Initial render
-//     renderPlans(monthlyPlans);
-// });
-
-// var swiper = new Swiper('.swiper-container', {
-//     slidesPerView: 1,
-//     spaceBetween: 20,
-//     effect: 'fade',
-//     loop: true,
-//     speed: 300,
-//     mousewheel: {
-//       invert: false,
-//     },
-//     pagination: {
-//       el: '.swiper-pagination',
-//       clickable: true,
-//       dynamicBullets: true
-//     },
-//     // Navigation arrows
-//     navigation: {
-//       nextEl: '.swiper-button-next',
-//       prevEl: '.swiper-button-prev',
-//     }
-//   });
 
 document.addEventListener('DOMContentLoaded', function () {
     const monthlyPlans = [
         {
             name: 'Basic',
-            price1: '$9.99',
+            price1: '₹9.99',
             features: ['100 Monthly invoice', '25 Save clients', 'Up to 2 team members', 'Estimated (Quotes)']
         },
         {
             name: 'Professional',
-            price1: '$19.99',
+            price1: '₹19.99',
             features: ['250 Monthly invoice', '100 Save clients', 'Up to 10 team members', 'Invoice reminder', 'Recurring statements']
         },
         {
             name: 'Enterprise',
-            price1: '$29.99',
+            price1: '₹29.99',
             features: ['Unlimited monthly invoice', 'Unlimited save clients', 'Up to 25 team members', 'Invoice reminder', 'Recurring statements']
         }
     ];
@@ -200,17 +105,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const yearlyPlans = [
         {
             name: 'Basic',
-            price1: '$99.99',
+            price1: '₹99.99',
             features: ['100 Monthly invoice', '25 Save clients', 'Up to 2 team members', 'Estimated (Quotes)']
         },
         {
             name: 'Professional',
-            price1: '$199.99',
+            price1: '₹199.99',
             features: ['250 Monthly invoice', '100 Save clients', 'Up to 10 team members', 'Invoice reminder', 'Recurring statements']
         },
         {
             name: 'Enterprise',
-            price1: '$299.99',
+            price1: '₹299.99',
             features: ['Unlimited monthly invoice', 'Unlimited save clients', 'Up to 25 team members', 'Invoice reminder', 'Recurring statements']
         }
     ];
