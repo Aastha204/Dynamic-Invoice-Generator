@@ -30,14 +30,11 @@ Welcome to the **Dynamic Invoice Generator**, a web application built with Flask
 ### Create Invoice
 ![Create Invoice](assets/Create.png)
 
-### Draft Invoice
+### Manage Invoice
 ![Create Invoice](assets/draft.png)
 
 ### Paid Invoice
 ![Create Invoice](assets/paid.png)
-
-### Manage Invoices
-![Manage Invoices](assets/Manage.png)
 
 ### Subscription Options
 ![Subscription Options](assets/subscri.png)
