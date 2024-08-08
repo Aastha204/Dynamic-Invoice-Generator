@@ -21,6 +21,9 @@ Welcome to the **Dynamic Invoice Generator**, a web application built with Flask
 ### Home Page
 ![Home Page](assets/Home.png)
 
+### Business Type
+![Business type](assets/businesstype.png)
+
 ### Create Invoice
 ![Create Invoice](assets/Create.png)
 
