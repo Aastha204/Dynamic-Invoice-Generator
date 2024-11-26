@@ -234,9 +234,9 @@ def use_template(template_id):
     form = InvoicedetailForm()  # Create an instance of the form
     
     if template_id == 1:
-        return render_template('usetemplate.html', form=form)
+        return render_template('template3.html', form=form)
     elif template_id == 2:
-        return render_template('usetemplate.html', form=form)
+        return render_template('template3.html', form=form)
     elif template_id == 3:
         return render_template('template3.html', form=form)
     else:
